@@ -143,7 +143,7 @@ ThemeData darkThemeData(BuildContext context) {
       foregroundColor: cardDarkColor,
       backgroundColor: primaryDarkColor,
     ),
-    cardTheme: CardTheme(color: cardDarkColor),
+    cardTheme: CardTheme(color: preDarkColor),
     useMaterial3: true,
   );
 }

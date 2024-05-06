@@ -6,6 +6,8 @@ import 'package:dev_finder/utils/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'bloc/github_bloc/github_bloc.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -15,8 +17,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => VisibilityBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => VisibilityBloc(),
+        ),
+        BlocProvider(
+          create: (context) => GithubBloc(),
+        ),
+      ],
       child: BlocBuilder<VisibilityBloc, VisibilityState>(
         builder: (context, state) {
           bool visible = (state as VisibilityToggled).visible;
