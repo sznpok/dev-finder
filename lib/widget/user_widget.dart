@@ -1,17 +1,23 @@
 import 'package:dev_finder/constants/color_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 import '../model/github_username_model.dart';
 
 class UserWidget extends StatelessWidget {
-  const UserWidget({super.key, this.userName});
+  UserWidget({super.key, this.userName});
 
   final GitHubUserName? userName;
 
+  final dateFormat = DateFormat('MMM dd, yyyy');
+
   @override
   Widget build(BuildContext context) {
+    DateTime dateTime = DateTime.parse(userName!.createdAt.toString());
+    final date = dateFormat.format(dateTime);
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
@@ -40,15 +46,19 @@ class UserWidget extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(userName!.name!),
-                              Text(userName!.login!),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(userName!.name != null
+                                    ? userName!.name!
+                                    : "No Name"),
+                                Text(userName!.login!),
+                              ],
+                            ),
                           ),
                           const Expanded(child: SizedBox()),
-                          Text(userName!.createdAt!),
+                          Text(date),
                         ],
                       ),
                       const SizedBox(
@@ -69,26 +79,50 @@ class UserWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   const Text('Repos'),
-                                  Text(userName!.publicRepos != null
-                                      ? userName!.publicRepos!.toString()
-                                      : "Not available"),
+                                  Text(
+                                    userName!.publicRepos != null
+                                        ? userName!.publicRepos!.toString()
+                                        : "Not available",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
                                 ],
                               ),
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   const Text('Followers'),
-                                  Text(userName!.followers!.toString()),
+                                  Text(
+                                    userName!.followers!.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
                                 ],
                               ),
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   const Text('Following'),
-                                  Text(userName!.following!.toString()),
+                                  Text(
+                                    userName!.following!.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
                                 ],
                               ),
                             ],
@@ -130,7 +164,9 @@ class UserWidget extends StatelessWidget {
                       width: 4.0,
                     ),
                     Text(
-                      userName!.location!,
+                      userName!.location != null
+                          ? userName!.location!
+                          : " No Address Found",
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ],

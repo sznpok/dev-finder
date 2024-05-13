@@ -20,11 +20,16 @@ class GithubBloc extends Bloc<GithubEvent, GithubState> {
       SearchGithubEvent event, Emitter<GithubState> emit) async {
     GithubRepo githubRepo = GithubRepo();
     emit(GithubLoadingState());
-    final repo = await githubRepo.getUserData(event.userName!);
-    if (repo.login != null) {
+
+    try {
+      final repo = await githubRepo.getUserData(event.userName!);
       emit(GithubSuccessState(repo));
-    } else {
-      emit(GithubErrorState("Not Found"));
+    } catch (e) {
+      if (e is NotFoundException) {
+        emit(GithubErrorState("User not found"));
+      } else {
+        emit(GithubErrorState("Failed to fetch user data"));
+      }
     }
   }
 }

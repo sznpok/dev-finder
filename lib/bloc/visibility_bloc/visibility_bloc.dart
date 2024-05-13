@@ -5,7 +5,7 @@ import 'visibility_event.dart';
 import 'visibility_state.dart';
 
 class VisibilityBloc extends Bloc<VisibilityEvent, VisibilityState> {
-  VisibilityBloc() : super(VisibilityToggled(visible: false)) {
+  VisibilityBloc() : super(const VisibilityToggled(visible: false)) {
     on<ToggleVisibilityEvent>(_onToggleVisibility);
   }
 

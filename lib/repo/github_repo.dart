@@ -10,16 +10,22 @@ class GithubRepo {
     );
     try {
       if (repo.statusCode == 200) {
-        log(repo.body.toString());
         final GitHubUserName result =
             GitHubUserName.fromJson(jsonDecode(repo.body));
-        log(result.toString());
         return result;
+      } else if (repo.statusCode == 404) {
+        throw NotFoundException("User not found");
       } else {
-        throw Exception("Failed to search");
+        throw Exception("Unexpected error occurred");
       }
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception(repo.body.toString());
     }
   }
+}
+
+class NotFoundException implements Exception {
+  final String message;
+
+  NotFoundException(this.message);
 }

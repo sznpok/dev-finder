@@ -80,9 +80,13 @@ class _AppScreenState extends State<AppScreen> {
                   contentPadding: const EdgeInsets.all(16.0),
                   suffixIcon: TextButton(
                     onPressed: () {
-                      BlocProvider.of<GithubBloc>(context).add(
-                        SearchGithubEvent(searchController.text),
-                      );
+                      if (searchController.text.isNotEmpty) {
+                        BlocProvider.of<GithubBloc>(context).add(
+                          SearchGithubEvent(searchController.text),
+                        );
+                      } else {
+                        return;
+                      }
                     },
                     child: Text(
                       "Search",
@@ -113,7 +117,7 @@ class _AppScreenState extends State<AppScreen> {
                 }
                 return const Expanded(
                   child: Center(
-                    child: Text("Search the Github account"),
+                    child: Text("👆️Search the Github account ☝"),
                   ),
                 );
               },

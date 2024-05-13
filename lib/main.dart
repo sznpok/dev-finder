@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         builder: (context, state) {
           bool visible = (state as VisibilityToggled).visible;
           return MaterialApp(
-            title: 'Flutter Demo',
+            title: 'Dev Finder',
             debugShowCheckedModeBanner: false,
             themeMode: ThemeMode.system,
             theme: visible ? lightThemeData(context) : darkThemeData(context),
